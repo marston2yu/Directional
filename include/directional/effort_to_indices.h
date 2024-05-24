@@ -61,11 +61,13 @@ namespace directional
 
         std::vector<int> singCyclesList;
         std::vector<int> singIndicesList;
-        for (int i=0;i<field.tb->local2Cycle.size();i++)
-            if (indices(i)!=0){
+        for (int i=0;i<field.tb->local2Cycle.size();i++) {
+            int index_fix = indices(i)%field.N;
+            if (index_fix != 0) {
                 singCyclesList.push_back(i);
                 singIndicesList.push_back(indices(i));
             }
+        }
 
         Eigen::VectorXi singCycles(singCyclesList.size());
         Eigen::VectorXi singIndices(singIndicesList.size());
