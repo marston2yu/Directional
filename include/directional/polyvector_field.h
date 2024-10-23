@@ -8,9 +8,12 @@
 #ifndef DIRECTIONAL_POLYVECTOR_FIELD_H
 #define DIRECTIONAL_POLYVECTOR_FIELD_H
 
+#include <Eigen/CholmodSupport>
+#include <Eigen/Eigenvalues>
 #include <Eigen/Geometry>
 #include <Eigen/Sparse>
 #include <Eigen/SparseCholesky>
+#include <Eigen/UmfPackSupport>
 #include <Eigen/Eigenvalues>
 #include <unsupported/Eigen/Polynomials>
 #include <igl/speye.h>
@@ -315,7 +318,7 @@ namespace directional
             intField.col(0)=U.col(smallestIndex);
             pvField.set_intrinsic_field(intField);
         } else { //just solving the system
-            SimplicialLDLT<SparseMatrix<complex<double>>> solver;
+            UmfPackLU<SparseMatrix<complex<double>>> solver;
             //solver.analyzePattern(totalLhs);   // for this step the numerical values of A are not used
             solver.compute(totalLhs);
             VectorXcd reducedDofs = solver.solve(totalRhs);
